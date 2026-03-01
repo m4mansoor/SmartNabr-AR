@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سمارت نَبْر — IoT Arabia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00B4D8;
+            --primary-dark: #0077B6;
+            --accent: #00F5D4;
+            --dark: #03045E;
+            --darker: #020336;
+            --card-bg: rgba(255,255,255,0.04);
+            --card-border: rgba(0,180,216,0.2);
+            --text: #E0F7FF;
+            --text-muted: #90C8D8;
+            --gradient: linear-gradient(135deg, #03045E 0%, #0077B6 50%, #00B4D8 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,245,212,0.15) 0%, transparent 70%);
+            top: -100px; left: -100px;
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,180,216,0.2) 0%, transparent 70%);
+            bottom: -50px; right: -50px;
+            border-radius: 50%;
+        }
+
+        .brand-badge {
+            background: rgba(0,245,212,0.15);
+            border: 1px solid rgba(0,245,212,0.4);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .arabic-word {
+            font-size: 72px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.08);
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            letter-spacing: -2px;
+            line-height: 1;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .hero h1 {
+            font-size: clamp(52px, 8vw, 96px);
+            font-weight: 900;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff 0%, #00F5D4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: clamp(15px, 2.5vw, 20px);
+            color: rgba(255,255,255,0.85);
+            margin-top: 24px;
+            font-weight: 500;
+            max-width: 620px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            margin-top: 40px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--darker);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,245,212,0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .scroll-dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.4; }
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: rgba(0,180,216,0.08);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+            padding: 40px 20px;
+        }
+
+        .stats-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 900;
+            line-height: 1.3;
+        }
+
+        .section-title span { color: var(--primary); }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 17px;
+            line-height: 1.9;
+            margin-top: 16px;
+            max-width: 680px;
+            font-weight: 400;
+        }
+
+        /* PROBLEM */
+        .problem-section {
+            background: linear-gradient(135deg, rgba(3,4,94,0.8) 0%, rgba(0,119,182,0.2) 100%);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 0 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: rgba(255,50,50,0.06);
+            border: 1px solid rgba(255,100,100,0.2);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: transform 0.3s;
+            flex-direction: row-reverse;
+        }
+
+        .problem-card:hover { transform: translateY(-4px); }
+
+        .problem-icon { font-size: 28px; flex-shrink: 0; }
+
+        .problem-card h4 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #ff9999;
+            margin-bottom: 6px;
+        }
+
+        .problem-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            background: rgba(0,180,216,0.08);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* HOW IT WORKS */
+        .how-bg {
+            background: linear-gradient(180deg, var(--darker) 0%, rgba(3,4,94,0.5) 50%, var(--darker) 100%);
+            padding: 80px 20px;
+        }
+
+        .steps-container {
+            max-width: 1100px;
+            margin: 48px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0;
+            position: relative;
+            direction: rtl;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(270deg, var(--primary), var(--accent));
+            z-index: 0;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 26px;
+            font-weight: 900;
+            color: white;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 30px rgba(0,180,216,0.4);
+        }
+
+        .step h4 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .step p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* SECTORS */
+        .sectors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .sector-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .sector-card:hover {
+            background: rgba(0,180,216,0.1);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .sector-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+        .sector-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+        .sector-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+        /* BENEFITS */
+        .benefits-section {
+            background: linear-gradient(135deg, rgba(0,245,212,0.05) 0%, rgba(0,119,182,0.1) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 0 20px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            flex-direction: row-reverse;
+        }
+
+        .benefit-check {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .benefit-item h4 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .benefit-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* POC BANNER */
+        .poc-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 100%);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 0 20px;
+            text-align: center;
+            border: 1px solid rgba(0,245,212,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poc-banner::before {
+            content: "💧";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.05;
+            top: -30px;
+            left: -30px;
+        }
+
+        .poc-banner h2 {
+            font-size: clamp(24px, 4vw, 38px);
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .poc-banner p {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            max-width: 580px;
+            margin: 0 auto 32px;
+            line-height: 1.9;
+        }
+
+        /* CONTACT */
+        .contact-section {
+            background: rgba(0,0,0,0.4);
+            border-top: 1px solid var(--card-border);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .contact-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            min-width: 220px;
+            transition: all 0.3s;
+            flex-direction: row-reverse;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .contact-card .icon { font-size: 24px; }
+        .contact-card .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; font-weight: 600; }
+        .contact-card .value { font-size: 14px; font-weight: 700; color: white; }
+
+        /* FOOTER */
+        footer {
+            background: var(--darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .product-family {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .product-tag {
+            background: rgba(0,180,216,0.1);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .product-tag.active {
+            background: rgba(0,245,212,0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .steps-container::before { display: none; }
+            .problem-section, .benefits-section, .poc-banner { padding: 40px 24px; margin: 0 10px; }
+            .arabic-word { font-size: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="arabic-word">نَبْر</div>
+    <div class="brand-badge">IoT Arabia — حلول المياه الذكية</div>
+    <h1>سمارت نَبْر</h1>
+    <p class="hero-sub">ذكاء المياه بتقنية الذكاء الاصطناعي وإنترنت الأشياء</p>
+    <p class="tagline">"متصل بإنترنت الأشياء، ذكي بالذكاء الاصطناعي — كل قطرة تحت المراقبة"</p>
+    <div class="hero-cta">
+        <a href="#contact" class="btn-primary">اطلب نموذجاً تجريبياً</a>
+        <a href="#features" class="btn-outline">استكشف المميزات</a>
+    </div>
+    <div class="scroll-indicator">
+        <span>مرّر للأسفل</span>
+        <div class="scroll-dot"></div>
+    </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+    <div class="stats-container">
+        <div class="stat-item">
+            <h3>٣٠٪</h3>
+            <p>تخفيض تكاليف المياه</p>
+        </div>
+        <div class="stat-item">
+            <h3>٢٤/٧</h3>
+            <p>مراقبة فورية متواصلة</p>
+        </div>
+        <div class="stat-item">
+            <h3>&lt;٢ms</h3>
+            <p>سرعة الاستجابة للتنبيهات</p>
+        </div>
+        <div class="stat-item">
+            <h3>+٥</h3>
+            <p>سنوات من البحث والتطوير</p>
+        </div>
+    </div>
+</div>
+
+<!-- WHAT IS -->
+<section>
+    <p class="section-label">نظرة عامة</p>
+    <h2 class="section-title">مراقبة ذكية للمياه<br><span>مصمّمة للصناعة السعودية</span></h2>
+    <p class="section-desc">سمارت نَبْر هو نظام متكامل لمراقبة المياه مدعوم بالذكاء الاصطناعي وإنترنت الأشياء، مصمّم خصيصاً للمنشآت الصناعية والتجارية في المملكة العربية السعودية. يوفر رؤية فورية لاستهلاك المياه ومستويات الخزانات ومعدلات التدفق والأعطال — لضمان كفاءة تشغيلية عالية وامتثال بيئي كامل وخفض ملموس للهدر.</p>
+</section>
+
+<!-- PROBLEM -->
+<div style="padding: 0 0 80px;">
+    <div class="problem-section" style="max-width:1100px; margin: 0 auto;">
+        <p class="section-label">التحديات</p>
+        <h2 class="section-title">هدر المياه<br><span style="color:#ff9999;">مشكلة مكلفة وصامتة</span></h2>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">🌊</div>
+                <div>
+                    <h4>مورد حيوي ومكلف</h4>
+                    <p>المياه في المملكة العربية السعودية موردٌ نادر ومرتفع التكلفة — كل لتر مهدر يُثقل الميزانية التشغيلية مباشرةً.</p>
+                </div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🔍</div>
+                <div>
+                    <h4>تسربات غير مكتشفة</h4>
+                    <p>التسربات الخفية تمر دون رصد لأيام أو أسابيع، مما يُسبب خسائر مالية وأضراراً هيكلية جسيمة.</p>
+                </div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">👷</div>
+                <div>
+                    <h4>مراقبة يدوية غير موثوقة</h4>
+                    <p>الاعتماد على الفحص اليدوي يستهلك الموارد البشرية ولا يضمن التغطية الكاملة والمستمرة.</p>
+                </div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">⏰</div>
+                <div>
+                    <h4>اكتشاف متأخر للمشكلات</h4>
+                    <p>غياب التنبيهات الفورية يعني أن المشكلات تُكتشف بعد وقوع الضرر، لا قبله.</p>
+                </div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">📊</div>
+                <div>
+                    <h4>غياب البيانات والتحليل</h4>
+                    <p>بدون بيانات استهلاك دقيقة، يستحيل تحسين البنية التحتية للمياه أو التخطيط الفعّال لها.</p>
+                </div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🌱</div>
+                <div>
+                    <h4>متطلبات رؤية 2030</h4>
+                    <p>رؤية المملكة 2030 تفرض ترشيداً قابلاً للقياس — تحتاج المؤسسات لأدوات تُثبت الالتزام الفعلي.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+    <p class="section-label">الإمكانيات التقنية</p>
+    <h2 class="section-title">كل ما تحتاجه لإتقان<br><span>إدارة المياه بذكاء</span></h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">💧</span>
+            <h3>مراقبة مستوى الخزانات آنياً</h3>
+            <p>اطّلع على مستويات المياه في جميع خزاناتك في الوقت الفعلي عبر بيانات مستمرة من المستشعرات.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🔁</span>
+            <h3>قياس معدلات التدفق</h3>
+            <p>راقب تدفق المياه في جميع نقاط المنشأة — حدّد مناطق الاستهلاك العالي فوراً.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🚨</span>
+            <h3>كشف التسربات بالذكاء الاصطناعي</h3>
+            <p>يرصد الذكاء الاصطناعي الأنماط الشاذة في الاستهلاك ويُطلق تنبيهات فورية قبل أن تتفاقم التسربات.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">📊</span>
+            <h3>لوحة تحليلات الاستهلاك</h3>
+            <p>تقارير يومية وأسبوعية وشهرية مع تحليل بياني للاتجاهات ومؤشرات الأداء الرئيسية.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🤖</span>
+            <h3>تنبيهات استباقية ذكية</h3>
+            <p>يتنبأ الذكاء الاصطناعي بشُح المياه واحتياجات الصيانة قبل أن تعطّل عمليات التشغيل.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">📱</span>
+            <h3>وصول عبر الجوال والويب</h3>
+            <p>راقب بنيتك التحتية للمياه من أي مكان، على أي جهاز، في أي وقت.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">⚙️</span>
+            <h3>أتمتة المضخات</h3>
+            <p>تشغيل المضخات تلقائياً بناءً على عتبات قابلة للضبط — دون أي تدخّل يدوي.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🔗</span>
+            <h3>تكامل سهل مع البنية القائمة</h3>
+            <p>تصميم مرن يتوافق مع البنية التحتية الحالية دون توقف تشغيلي أو تعطيل للعمليات.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-bg">
+    <div style="max-width:1100px; margin: 0 auto; padding: 0 20px;">
+        <p class="section-label">آلية العمل</p>
+        <h2 class="section-title">كيف يعمل <span>سمارت نَبْر</span>؟</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">١</div>
+                <h4>تركيب مستشعرات IoT</h4>
+                <p>تُنصب المستشعرات على الخزانات وخطوط الأنابيب ونقاط قياس التدفق</p>
+            </div>
+            <div class="step">
+                <div class="step-number">٢</div>
+                <h4>نقل البيانات فورياً</h4>
+                <p>تُرسل البيانات بصفة مستمرة إلى لوحة التحكم السحابية الآمنة</p>
+            </div>
+            <div class="step">
+                <div class="step-number">٣</div>
+                <h4>تحليل الذكاء الاصطناعي</h4>
+                <p>يحلل الذكاء الاصطناعي الأنماط ويكتشف الشذوذات ويتنبأ بالمشكلات</p>
+            </div>
+            <div class="step">
+                <div class="step-number">٤</div>
+                <h4>تنبيهات فورية</h4>
+                <p>إشعارات تُرسل عبر التطبيق والرسائل النصية والبريد الإلكتروني لحظياً</p>
+            </div>
+            <div class="step">
+                <div class="step-number">٥</div>
+                <h4>تقارير قابلة للتنفيذ</h4>
+                <p>تقارير إدارية تُولَّد لدعم اتخاذ القرارات المبنية على البيانات</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTORS -->
+<section>
+    <p class="section-label">القطاعات المستهدفة</p>
+    <h2 class="section-title">مصمّم لأبرز<br><span>القطاعات الصناعية في المملكة</span></h2>
+    <div class="sectors-grid">
+        <div class="sector-card">
+            <span class="sector-icon">🛢️</span>
+            <h4>النفط والغاز</h4>
+            <p>مراقبة خزانات المياه في المواقع النائية للمنشآت الأمامية والخلفية</p>
+        </div>
+        <div class="sector-card">
+            <span class="sector-icon">🏭</span>
+            <h4>التصنيع</h4>
+            <p>تتبع استهلاك مياه العمليات الصناعية وتحسين كفاءة الاستخدام</p>
+        </div>
+        <div class="sector-card">
+            <span class="sector-icon">📦</span>
+            <h4>المستودعات والخدمات اللوجستية</h4>
+            <p>إدارة مياه المنشأة والحدّ من الهدر في المستودعات ومراكز التوزيع</p>
+        </div>
+        <div class="sector-card">
+            <span class="sector-icon">🏢</span>
+            <h4>المباني التجارية</h4>
+            <p>إدارة ذكية للمياه في المكاتب والمجمعات التجارية والمشاريع متعددة الاستخدامات</p>
+        </div>
+        <div class="sector-card">
+            <span class="sector-icon">🏙️</span>
+            <h4>الجهات الحكومية والبلديات</h4>
+            <p>مراقبة شبكات التوزيع وخفض نسب الفاقد في المشاريع الحضرية</p>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFITS -->
+<div style="padding: 0 0 80px;">
+    <div class="benefits-section" style="max-width:1100px; margin: 0 auto;">
+        <p class="section-label">القيمة التجارية</p>
+        <h2 class="section-title">لماذا تختار المؤسسات الرائدة<br><span>سمارت نَبْر؟</span></h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-check">📉</div>
+                <div>
+                    <h4>خفض تكاليف المياه حتى ٣٠٪</h4>
+                    <p>القضاء على الهدر عبر كشف الشذوذات وتحسين الاستهلاك بالذكاء الاصطناعي.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-check">⏱️</div>
+                <div>
+                    <h4>توفير ساعات التشغيل</h4>
+                    <p>إلغاء الفحوصات اليدوية — يتفرّغ فريقك لما يحدث فعلاً فارقاً.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-check">🌱</div>
+                <div>
+                    <h4>التوافق مع رؤية 2030</h4>
+                    <p>تحقيق أهداف الاستدامة وترشيد المياه الوطنية ببيانات موثقة وقابلة للقياس.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-check">🔒</div>
+                <div>
+                    <h4>الحماية من الخسائر المكلفة</h4>
+                    <p>وقف الأضرار المالية الناجمة عن التسربات غير المكتشفة وأعطال المضخات المفاجئة.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-check">📈</div>
+                <div>
+                    <h4>تخطيط مبني على البيانات</h4>
+                    <p>اتخاذ قرارات البنية التحتية استناداً إلى بيانات استهلاك حقيقية وتحليلات ذكية.</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-check">🚀</div>
+                <div>
+                    <h4>تركيب دون توقف تشغيلي</h4>
+                    <p>تصميم مرن للتركيب يُتيح الدمج الكامل دون أي انقطاع أو تأثير على العمليات الجارية.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- POC BANNER -->
+<div style="padding: 0 0 80px;">
+    <div class="poc-banner" style="max-width:1100px; margin: 0 auto;">
+        <h2>جرّب سمارت نَبْر<br>قبل اتخاذ قرارك</h2>
+        <p>تُقدّم IoT Arabia <strong>نموذجاً تجريبياً ممولاً من العميل (PoC)</strong> — شاهد سمارت نَبْر يعمل في منشأتك الفعلية، ببياناتك الحقيقية، قبل الانتشار الكامل. بلا مخاطر. بشفافية تامة.</p>
+        <a href="#contact" class="btn-primary">ابدأ نموذجك التجريبي اليوم</a>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+    <p class="section-label" style="text-align:center;">تواصل معنا</p>
+    <h2 class="section-title" style="text-align:center;">هل أنت مستعد لتحويل<br><span>إدارة المياه</span> في منشأتك؟</h2>
+    <div class="contact-cards">
+        <div class="contact-card">
+            <div class="icon">📧</div>
+            <div>
+                <div class="label">البريد الإلكتروني</div>
+                <div class="value">info@iotarabia.com</div>
+            </div>
+        </div>
+        <div class="contact-card">
+            <div class="icon">🌐</div>
+            <div>
+                <div class="label">الموقع الإلكتروني</div>
+                <div class="value">www.iotarabia.com</div>
+            </div>
+        </div>
+        <div class="contact-card">
+            <div class="icon">📍</div>
+            <div>
+                <div class="label">الموقع</div>
+                <div class="value">الخبر، المنطقة الشرقية، المملكة العربية السعودية</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">IoT Arabia</div>
+    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px; font-weight: 600;">نُمكّن صناعة الجزيرة العربية بذكاء إنترنت الأشياء والذكاء الاصطناعي</p>
+    <div class="product-family">
+        <span class="product-tag active">سمارت نَبْر</span>
+        <span class="product-tag">سمارت نَار</span>
+        <span class="product-tag">سمارت بَارِد</span>
+        <span class="product-tag">سمارت هَوَاء</span>
+        <span class="product-tag">سمارت حَارِس</span>
+        <span class="product-tag">سمارت وَصْل</span>
+        <span class="product-tag">سمارت طَاقَة</span>
+    </div>
+    <p>© ٢٠٢٦ IoT Arabia. جميع الحقوق محفوظة. | الخبر، المملكة العربية السعودية</p>
+</footer>
+
+</body>
+</html>
